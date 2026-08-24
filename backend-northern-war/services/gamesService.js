@@ -3,7 +3,9 @@ import { createGame,
     getGame,
     updateGame
  } from "../repositories/gamesRepository.js";
-import { attackUtils } from "../../utils.js"
+import { attackUtils,
+    computerTurn
+ } from "../../utils.js"
 
 export async function startGame(name) {
     const { playerName } = name;
@@ -64,7 +66,7 @@ export async function reinforce(id, data) {
 
     if(game.status === "finished"){
         const error = new Error("Game is finished");
-        error.status = 400;
+        error.status = 409;
         throw error;
     }
 
@@ -115,7 +117,7 @@ export async function attack(id, data) {
 
     if(game.status === "finished"){
         const error = new Error("Game is finished");
-        error.status = 400;
+        error.status = 409;
         throw error;
     }
     const {skip} = data
@@ -168,8 +170,125 @@ export async function attack(id, data) {
     
     game = await getGame(id);
 
+    
     const playerEvent = event;
     const computerEvents = []
+    
+    return {
+        ...game,
+        playerEvent,
+        computerEvents
+    };
+}
+
+export async function move(id, data) {
+    if(!(new ObjectId(id))){
+        const error = new Error("Game id required");
+        error.status = 400;
+        throw error;
+    }
+
+    let game = await getGame(id);
+
+    if(!game){
+        const error = new Error("Game Not Found");
+        error.status = 404;
+        throw error;
+    }
+    
+    if(game.phase !== "move"){
+        const error = new Error("Game Not in move phase");
+        error.status = 400;
+        throw error;
+    }
+
+    if(game.status === "finished"){
+        const error = new Error("Game is finished");
+        error.status = 409;
+        throw error;
+    }
+
+    const {fromId, toId, soldiers} = data;
+    
+    if(game.territories[fromId-1].owner !== "player" || game.territories[toId-1].owner !== "player"){
+        const error = new Error("Both territories must by owned by player");
+        error.status = 400;
+        throw error;
+    }
+
+    if(!game.territories[fromId-1].neighbors.includes(game.territories[toId-1].id)){
+        const error = new Error("Both territories must by neighbors");
+        error.status = 400;
+        throw error;
+    }
+
+    if("number" !== typeof (soldiers) || soldiers < 1){
+        const error = new Error("Number of soldiers must be int and positive");
+        error.status = 400;
+        throw error;
+    }
+
+    if(game.territories[fromId-1].soldiers <= soldiers){
+        const error = new Error("At least 1 soldier must stay in origin territory");
+        error.status = 400;
+        throw error;
+    }
+
+    game.territories[fromId-1].soldiers -= soldiers
+    game.territories[toId-1].soldiers += soldiers
+    
+    const playerEvent = {"type" : "move", "fromTerritoryId" : fromId, "toTerritoryId" : toId, "soldiersMoved" : soldiers };
+    
+    const newEvent = await computerTurn(game);
+    
+    const {updatedGame, event} = newEvent;
+    
+    await updateGame(updatedGame);
+    game = await getGame(id);
+    
+    return {
+        ...game,
+        playerEvent,
+        computerEvents
+    };
+}
+
+
+export async function endTurn(id) {
+    if(!(new ObjectId(id))){
+        const error = new Error("Game id required");
+        error.status = 400;
+        throw error;
+    }
+
+    let game = await getGame(id);
+
+    if(!game){
+        const error = new Error("Game Not Found");
+        error.status = 404;
+        throw error;
+    }
+    
+    if(game.phase !== "move"){
+        const error = new Error("Game Not in move phase");
+        error.status = 400;
+        throw error;
+    }
+
+    if(game.status === "finished"){
+        const error = new Error("Game is finished");
+        error.status = 409;
+        throw error;
+    }
+
+    const playerEvent = null;
+    
+    const newEvent = await computerTurn(game);
+    
+    const {updatedGame, event} = newEvent;
+    
+    await updateGame(updatedGame);
+    game = await getGame(id);
     
     return {
         ...game,

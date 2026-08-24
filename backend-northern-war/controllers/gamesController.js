@@ -1,7 +1,9 @@
 import { startGame,
     loadGame,
     reinforce,
-    attack
+    attack,
+    move,
+    endTurn
  } from "../services/gamesService.js";
 
 export async function startGameController(req, res) {
@@ -21,5 +23,15 @@ export async function reinforceController(req, res) {
 
 export async function attackController(req, res) {
     const game = await attack(req.params.id, req.body);
+    return res.json({game});
+}
+
+export async function moveController(req, res) {
+    const game = await move(req.params.id, req.body);
+    return res.json({game});
+}
+
+export async function endTurnController(req, res) {
+    const game = await endTurn(req.params.id);
     return res.json({game});
 }
