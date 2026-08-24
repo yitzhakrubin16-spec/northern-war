@@ -1,8 +1,8 @@
 {
   "name": "northern-war",
   "version": "1.0.0",
-  "description": "השתמשתי ב Supabase כי המפה בעלות שדות קבועים ומבנה טבלאי",
-  "main": "index.js",
+  "description": "",
+  "main": "app.js",
   "scripts": {
     "start": "node --watch app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
