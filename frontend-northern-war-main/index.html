@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>המערכה בצפון</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <nav>
+      <div><strong>המערכה בצפון</strong><span id="round"></span></div>
+      <div class="nav-actions"><span class="player-dot"></span> ישראל <span class="computer-dot"></span> חיזבאללה <button id="new-game">משחק חדש</button></div>
+    </nav>
+
+    <main>
+      <section id="start" class="panel start-panel">
+        <p class="eyebrow">משחק אסטרטגיה מול המחשב</p>
+        <h1>המערכה בצפון</h1>
+        <p>חזק את הגבול, התקדם דרך דרום לבנון וכבוש את מפקדת חיזבאללה בביירות לפני שהמחשב יגיע לירושלים.</p>
+        <form id="start-form">
+          <input id="player-name" placeholder="שם המפקד" maxlength="30" required>
+          <button>התחל מערכה</button>
+        </form>
+      </section>
+
+      <section id="game" hidden>
+        <div class="game-layout">
+          <aside class="panel controls">
+            <p class="eyebrow">המשימה הנוכחית</p>
+            <h2 id="phase-title"></h2>
+            <p id="message"></p>
+            <div id="selection"></div>
+            <div id="attack-form" hidden>
+              <label id="soldiers-label" for="soldiers">כמה חיילים לשלוח?</label>
+              <input id="soldiers" type="number" min="1">
+              <button id="attack-button">אישור</button>
+            </div>
+            <button id="end-turn" class="secondary" hidden>סיום תור ללא תקיפה</button>
+            <div id="battle-report" class="report"></div>
+          </aside>
+
+          <div class="map-wrap">
+            <div id="map" class="map" aria-label="מפת המשחק"></div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script src="app.js?v=6"></script>
+  </body>
+</html>

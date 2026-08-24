@@ -1,0 +1,29 @@
+{
+  "name": "northern-war",
+  "version": "1.0.0",
+  "description": "השתמשתי ב Supabase כי המפה בעלות שדות קבועים ומבנה טבלאי",
+  "main": "index.js",
+  "scripts": {
+    "start": "node --watch backend-northern-war/app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yitzhakrubin16-spec/northern-war.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/yitzhakrubin16-spec/northern-war/issues"
+  },
+  "homepage": "https://github.com/yitzhakrubin16-spec/northern-war#readme",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.112.3",
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "mongodb": "^7.5.0"
+  }
+}

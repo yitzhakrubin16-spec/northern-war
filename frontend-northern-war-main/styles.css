@@ -1,0 +1,106 @@
+:root {
+  font-family: Arial, sans-serif;
+  color: #17222d;
+  background: #d8ddd8;
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; overflow: hidden; }
+button, input { font: inherit; }
+
+nav {
+  position: fixed;
+  z-index: 10;
+  inset: 0 0 auto 0;
+  height: 64px;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #fff;
+  background: #202a33;
+  border-bottom: 4px solid #c5a253;
+}
+
+nav strong { font-size: 1.25rem; }
+#round { margin-right: 18px; color: #cbd4da; }
+.nav-actions { display: flex; align-items: center; gap: 9px; font-size: .9rem; }
+.player-dot, .computer-dot { width: 11px; height: 11px; border-radius: 50%; }
+.player-dot { background: #2476a8; }
+.computer-dot { background: #a6443d; margin-right: 10px; }
+
+button {
+  padding: 10px 16px;
+  border: 0;
+  color: white;
+  background: #2476a8;
+  cursor: pointer;
+}
+button:hover { filter: brightness(.9); }
+button:disabled { cursor: not-allowed; opacity: .5; }
+button.secondary { color: #17222d; background: #d7dde0; }
+nav button { padding: 7px 12px; margin-right: 12px; background: transparent; border: 1px solid #73818b; }
+
+main { height: 100vh; padding-top: 64px; }
+.panel { background: #f7f7f3; border: 1px solid #adb7b5; box-shadow: 0 8px 20px #1a252d20; }
+.start-panel { width: min(480px, calc(100% - 32px)); padding: 34px; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -45%); }
+.start-panel h1 { margin: 4px 0 12px; font-size: 2rem; }
+.start-panel form { display: flex; gap: 8px; margin-top: 24px; }
+.start-panel input { flex: 1; min-width: 0; padding: 10px; border: 1px solid #899794; }
+.eyebrow { margin: 0 0 5px; color: #6e5a2d; font-size: .75rem; font-weight: bold; letter-spacing: .08em; text-transform: uppercase; }
+
+#game, .game-layout { height: 100%; }
+.game-layout { display: grid; grid-template-columns: 290px 1fr; direction: ltr; gap: 14px; padding: 14px; }
+.controls { direction: rtl; padding: 20px; overflow-y: auto; }
+.controls h2 { margin: 5px 0 8px; }
+.controls button { width: 100%; margin-top: 10px; }
+.controls label { display: block; margin: 20px 0 6px; font-weight: bold; }
+.controls input { width: 100%; padding: 9px; border: 1px solid #899794; }
+#selection { min-height: 48px; padding: 10px; background: #e6ebea; border-right: 3px solid #2476a8; }
+.report { margin-top: 20px; font-size: .9rem; line-height: 1.5; border-top: 1px solid #ccd3d1; padding-top: 14px; }
+
+.map-wrap { overflow: auto; background: #84928d; border: 1px solid #65736e; }
+.map {
+  position: relative;
+  direction: rtl;
+  min-width: 700px;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 2 / 3;
+  background-color: #c9c5aa;
+  background-image: url('assets/israel-lebanon-map.png?v=6');
+  background-position: 0 0;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+}
+
+.territory {
+  position: absolute;
+  z-index: 2;
+  width: 128px;
+  min-height: 68px;
+  transform: translate(-50%, -50%);
+  padding: 7px;
+  border: 3px solid #fff8;
+  border-radius: 18px 8px 20px 10px;
+  box-shadow: 0 5px 10px #17222d35;
+  text-align: right;
+}
+
+.territory.player { background: #2476a8; }
+.territory.computer { background: #a6443d; }
+.territory.selected { outline: 5px solid #f1c75b; outline-offset: 3px; }
+.territory.available { box-shadow: 0 0 0 5px #f1c75b99, 0 5px 10px #17222d35; }
+.territory-name { display: block; font-size: .78rem; font-weight: bold; }
+.army { display: flex; align-items: center; gap: 6px; margin-top: 7px; font-size: 1.1rem; font-weight: bold; }
+.army::before { content: '♟'; font-size: 1.35rem; }
+.hq { position: absolute; left: 8px; top: 6px; font-size: 1.2rem; }
+
+@media (max-width: 760px) {
+  body { overflow: auto; }
+  nav { padding: 0 10px; }
+  .nav-actions > span:not(.player-dot):not(.computer-dot) { display: none; }
+  main { height: auto; min-height: 100vh; }
+  .game-layout { grid-template-columns: 1fr; grid-template-rows: auto 65vh; }
+  .controls { overflow: visible; }
+}
