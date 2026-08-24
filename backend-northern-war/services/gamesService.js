@@ -5,7 +5,7 @@ import { createGame,
  } from "../repositories/gamesRepository.js";
 import { attackUtils,
     computerTurn
- } from "../../utils.js"
+ } from "../utils.js"
 
 export async function startGame(name) {
     const { playerName } = name;

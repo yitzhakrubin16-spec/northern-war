@@ -1,7 +1,6 @@
 
 import fs from "fs";
-import {createTeritory, isMapTableExist} from "./backend-northern-war/repositories/createMap.js"
-import { log } from "console";
+import {createTeritory, isMapTableExist} from "./repositories/createMap.js"
  
 export async function loadFromJson(filePath) {
     if (!fs.existsSync(filePath)) {
